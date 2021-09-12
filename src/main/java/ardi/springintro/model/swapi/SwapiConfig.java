@@ -1,4 +1,4 @@
-package ardi.springintro.model;
+package ardi.springintro.model.swapi;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -1,4 +1,4 @@
-package ardi.springintro.model;
+package ardi.springintro.model.swapi.model;
 
 public class SwapiFilm {
   String title;

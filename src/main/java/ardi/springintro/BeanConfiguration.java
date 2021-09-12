@@ -1,15 +1,11 @@
 package ardi.springintro;
 
-import ardi.springintro.model.SwapiConfig;
-import ardi.springintro.service.MovieProvider;
-import ardi.springintro.service.SwapiClient;
-import ardi.springintro.service.impl.StarwarsMovie;
-import ardi.springintro.service.impl.SwapiClientImpl;
+import ardi.springintro.model.swapi.SwapiConfig;
+import ardi.springintro.service.*;
+import ardi.springintro.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -26,6 +22,31 @@ public class BeanConfiguration {
     @Bean
     public MovieProvider starwarsMovie(){
         return new StarwarsMovie(swapiClient);
+    }
+
+    @Bean
+    public PeopleProvider starwarsPeople(){
+        return new StarwarsPeople(swapiClient);
+    }
+
+    @Bean
+    public PlanetProvider starwarsPlanet(){
+        return new StarwarsPlanet(swapiClient);
+    }
+
+    @Bean
+    public SpaceshipProvider starwarsSpaceship(){
+        return new StarwarsSpaceship(swapiClient);
+    }
+
+    @Bean
+    public SpeciesProvider starwarsSpecies(){
+        return new StarwarsSpecies(swapiClient);
+    }
+
+    @Bean
+    public VehicleProvider starwarsVehicle(){
+        return new StarwarsVehicle(swapiClient);
     }
 
     @Bean(name = "swapiWebClient")

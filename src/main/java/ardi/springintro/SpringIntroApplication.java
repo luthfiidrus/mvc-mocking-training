@@ -15,8 +15,8 @@ public class SpringIntroApplication {
 		// Class spring yang bertugas sebagai container yang me-managed semua bean yang ada
 		ApplicationContext context = SpringApplication.run(SpringIntroApplication.class, args);
 
-		TheaterApp theaterApp = context.getBean(TheaterApp.class);
-		theaterApp.playTheater();
+//		TheaterApp theaterApp = context.getBean(TheaterApp.class);
+//		theaterApp.playTheater();
 
 	}
 

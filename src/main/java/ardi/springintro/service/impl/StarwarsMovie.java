@@ -1,10 +1,10 @@
 package ardi.springintro.service.impl;
 
 import ardi.springintro.model.Movie;
-import ardi.springintro.model.SwapiFilm;
+import ardi.springintro.model.swapi.model.SwapiFilm;
 import ardi.springintro.service.MovieProvider;
 import ardi.springintro.service.SwapiClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +27,10 @@ public class StarwarsMovie implements MovieProvider {
     public List<Movie> getMovies(){
         List<SwapiFilm> swapiFilms = swapiClient.getFilms();
         List<Movie> response = new ArrayList<>();
-//        for (int i = 0; i < swapiFilms.size(); i++) {
-//            SwapiFilm swapiFilm = swapiFilms.get(i);
-//        }
         for (SwapiFilm swapiFilm: swapiFilms) {
             Movie movie = new Movie();
-            movie.setEpisode(swapiFilm.getEpisode_id());
-            movie.setJudul(swapiFilm.getTitle());
+            movie.setEpisode_id(swapiFilm.getEpisode_id());
+            movie.setTitle(swapiFilm.getTitle());
 
             response.add(movie);
         }
@@ -43,7 +40,10 @@ public class StarwarsMovie implements MovieProvider {
 
     @Override
     public Movie getMovie(int index) {
-        return movies.get(index-1);
+        SwapiFilm swapiFilm = swapiClient.getSpecificFilms(index);
+        Movie movie = new Movie();
+        BeanUtils.copyProperties(swapiFilm, movie);
+        return movie;
     }
 
     @Override

@@ -51,8 +51,16 @@ class MoviesControllerTest {
         mockResponse.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         mockResponse.setResponseCode(200);
 
+        String jsonFilePath = "";
+        if (recordedRequest.getPath().equals("/films")) {
+          jsonFilePath = "src/test/resources/jsonResponse/filmsResponse.json";
+        }
+        else {
+          jsonFilePath = "src/test/resources/jsonResponse/filmResponse.json";
+        }
+
         try {
-          FileInputStream fileInputStream = new FileInputStream("src/test/resources/jsonResponse/filmsResponse.json");
+          FileInputStream fileInputStream = new FileInputStream(jsonFilePath);
           String content = IOUtils.toString(fileInputStream, StandardCharsets.UTF_8.name());
           mockResponse.setBody(content);
         } catch (Exception e) {
@@ -68,18 +76,18 @@ class MoviesControllerTest {
     mockWebServer.shutdown();
   }
 
-  @BeforeEach
-  public void setup() {
-    Movie movie = new Movie();
-    movie.setJudul(TESTING);
-    movie.setEpisode(1);
-    client.post()
-        .uri("/movies")
-        .body(BodyInserters.fromValue(movie))
-        .exchange()
-        .expectStatus()
-        .isOk();
-  }
+//  @BeforeEach
+//  public void setup() {
+//    Movie movie = new Movie();
+//    movie.setTitle(TESTING);
+//    movie.setEpisode_id(1);
+//    client.post()
+//        .uri("/movies")
+//        .body(BodyInserters.fromValue(movie))
+//        .exchange()
+//        .expectStatus()
+//        .isOk();
+//  }
 
   @Test
   public void getMoviesTest() {
@@ -93,21 +101,22 @@ class MoviesControllerTest {
         .returnResult()
         .getResponseBody();
 
-    System.out.println(response);
+//    System.out.println(response);
 
     assertNotNull(response);
     assertTrue(response.size() > 0);
-    assertEquals("Judul Film Pertama", response.get(0).getJudul());
+    assertEquals("A New Hope", response.get(0).getTitle());
+    assertEquals("The Empire Strikes Back", response.get(1).getTitle());
   }
 
-  @Test
-  public void postMovie_failed() {
-    client.post()
-        .uri("/movies")
-        .exchange()
-        .expectStatus()
-        .is4xxClientError();
-  }
+//  @Test
+//  public void postMovie_failed() {
+//    client.post()
+//        .uri("/movies")
+//        .exchange()
+//        .expectStatus()
+//        .is4xxClientError();
+//  }
 
   @Test
   public void getMovie() {
@@ -121,22 +130,23 @@ class MoviesControllerTest {
         .getResponseBody();
 
     assertNotNull(response);
+    assertEquals("A New Hope", response.getTitle());
   }
 
-  @Test
-  public void getMovieEpisode() {
-    Movie response = client.get()
-        .uri(uriBuilder -> uriBuilder.path("/movies-episode")
-            .queryParam("episode", 1)
-            .build()
-        )
-        .exchange()
-        .expectStatus()
-        .isOk()
-        .expectBody(new ParameterizedTypeReference<Movie>() {})
-        .returnResult()
-        .getResponseBody();
-
-    assertNotNull(response);
-  }
+//  @Test
+//  public void getMovieEpisode() {
+//    Movie response = client.get()
+//        .uri(uriBuilder -> uriBuilder.path("/movies-episode")
+//            .queryParam("episode", 1)
+//            .build()
+//        )
+//        .exchange()
+//        .expectStatus()
+//        .isOk()
+//        .expectBody(new ParameterizedTypeReference<Movie>() {})
+//        .returnResult()
+//        .getResponseBody();
+//
+//    assertNotNull(response);
+//  }
 }

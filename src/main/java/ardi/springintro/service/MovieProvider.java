@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface MovieProvider {
 
-    public List<Movie> getMovies();
+    List<Movie> getMovies();
 
-    public Movie getMovie(int index);
+    Movie getMovie(int index);
 
-    public boolean saveMovie(Movie movie);
+    boolean saveMovie(Movie movie);
 
-    public boolean deleteMovie();
+    boolean deleteMovie();
 
 }
